@@ -4,9 +4,10 @@ name: infisical-csi-provider
 namespace: kube-system
 
 # Container image configuration
+# Our build, which upstream's image is not: it carries the read window and AWS auth.
 image:
-  repository: infisical/infisical-csi-provider # Image repository name
-  tag: v0.0.7 # Image tag
+  repository: registry.internal.huggingface.tech/shared-infra/infisical-csi-provider
+  tag: v0.0.7-hf.1 # Image tag
   pullPolicy: IfNotPresent # Pull policy: Always|IfNotPresent|Never
 
 # Infisical provider arguments
