@@ -62,3 +62,9 @@ nodeSelector:
 labels: {} # Additional labels for resources
 podLabels: {} # Additional labels for pods
 tolerations: [] # Pod tolerations for node taints
+
+# Annotations on the provider's ServiceAccount. With authMethod "aws", this is where an IRSA role goes,
+# which is narrower than relying on the node instance profile.
+#   eks.amazonaws.com/role-arn: arn:aws:iam::<account>:role/<role>
+serviceAccount:
+  annotations: {}
