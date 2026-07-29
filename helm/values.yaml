@@ -59,6 +59,12 @@ readinessProbe:
 nodeSelector:
   kubernetes.io/os: linux # Only deploy on Linux nodes
 
+# A node already at its pod limit gives a default-priority DaemonSet nowhere to go, and the provider
+# then silently does not run there: any pod scheduled on that node and mounting a SecretProviderClass
+# waits in ContainerCreating forever. Node-critical lets it evict something instead. Requires the
+# namespace above to stay kube-system, since that priority class is rejected anywhere else.
+priorityClassName: system-node-critical
+
 # Optional configurations
 labels: {} # Additional labels for resources
 podLabels: {} # Additional labels for pods

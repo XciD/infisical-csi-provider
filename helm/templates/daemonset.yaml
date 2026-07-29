@@ -23,6 +23,7 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: {{ .Values.name | default "infisical-csi-provider" }}
+      priorityClassName: {{ .Values.priorityClassName | default "system-node-critical" }}
       {{- with .Values.tolerations }}
       tolerations:
       {{- toYaml . | nindent 6 }}
