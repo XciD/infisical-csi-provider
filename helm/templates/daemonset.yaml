@@ -11,6 +11,10 @@ metadata:
 spec:
   updateStrategy:
     type: {{ .Values.updateStrategy | default "RollingUpdate" }}
+    {{- if eq (.Values.updateStrategy | default "RollingUpdate") "RollingUpdate" }}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.maxUnavailable | default "100%" }}
+    {{- end }}
   selector:
     matchLabels:
       app: {{ .Values.name | default "infisical-csi-provider" }}

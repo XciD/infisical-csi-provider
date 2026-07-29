@@ -59,6 +59,12 @@ readinessProbe:
 nodeSelector:
   kubernetes.io/os: linux # Only deploy on Linux nodes
 
+# One node at a time means an upgrade takes as long as the cluster is wide, which on a few hundred
+# nodes outlives the timeout of whatever is driving the release. Replacing every pod at once costs a
+# few seconds during which a starting pod cannot mount; pods that already mounted are untouched, since
+# their files are written and the socket is only consulted on mount and on rotation.
+maxUnavailable: 100%
+
 # A node already at its pod limit gives a default-priority DaemonSet nowhere to go, and the provider
 # then silently does not run there: any pod scheduled on that node and mounting a SecretProviderClass
 # waits in ContainerCreating forever. Node-critical lets it evict something instead. Requires the
